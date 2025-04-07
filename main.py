@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_lottie import st_lottie
+import streamlit_lottie
 import requests
 import os
 
