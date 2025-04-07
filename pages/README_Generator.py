@@ -1,17 +1,19 @@
-import os
 import streamlit as st
+import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Load environment variables
+# Page configuration
+st.set_page_config(page_title="README Generator", layout="wide")
+
+# Load environment variables and configure Gemini
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Load Gemini model
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")  # you can also use "gemini-pro" if needed
+model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
-# Streamlit UI
-st.set_page_config(page_title="README.md Generator", layout="centered")
+# Title and description
 st.title("📄 AI README.md Generator")
 st.caption("💡 Built with a Growth Mindset: Every README is a step towards becoming better!")
 st.markdown("Generate a professional `README.md` file for your project using AI!")
@@ -59,4 +61,8 @@ elif input_type == "Manual Project Details":
             response = model.generate_content(prompt)
         readme = response.text if hasattr(response, "text") else ""
         st.subheader("📄 Generated README.md")
-        st.code(readme, language="markdown")#this line tell llm the response must me in coding form of markdown that user easily just copy paste
+        st.code(readme, language="markdown")
+
+# Add a button to go back to the main page
+if st.button("← Back to Home"):
+    st.switch_page("main.py") 
